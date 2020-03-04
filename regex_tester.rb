@@ -27,12 +27,14 @@ class RegexTester
     end
 
     def test
-        if pattern_matches? @statement
-          puts "MATCH: #{@statement}"
+        @statements.each do |item|
+        if pattern_matches? item
+          puts "MATCH: #{item}"
         else
-          STDERR.puts "NO MATCH: #{@statement}"
+          STDERR.puts "NO MATCH: #{item}"
         end
       end 
+    end
 
     private
     def pattern_matches? statement
@@ -46,12 +48,12 @@ class RegexTester
 
   end
 
-  regex = RegexTester.new
-  regex.pattern = /^(http:\/\/)?www\.\w+\.(com|edu|org)$/  # from test_arrays.rb
-  puts regex.pattern
-  regex.statement = "http://www.google.com"
-  puts regex.statement
+
+  cc = RegexTester.new
+  cc.statements = %w[1234567890123456 1234-5678-9012-3456 1234\ 5678\ 9012\ 3456 1234567890 #1234567890123456 1234|5678|9012|3456 12345678901234567]
+
+  cc.pattern = /^(\d{4}[ -]?){4}$/
+
+
   puts "------"
-  regex.test
-  regex.statement = "apidock.com"
-  regex.test
+  cc.test
