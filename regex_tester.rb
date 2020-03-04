@@ -5,9 +5,22 @@ class RegexTester
 
     attr_accessor :pattern
 
-    def statement=(statement)
-        @statement = statement
-      end
+    def statements=(arr)
+        begin
+          raise TypeError unless arr.class == Array
+          raise RuntimeError if arr.empty?
+          @statements = arr
+    
+        rescue RuntimeError
+          STDERR.puts "You need to have at least one statement to test against the pattern."
+          add_insult
+          exit
+        rescue TypeError
+          STDERR.puts "You must enter an ARRAY of statements to use this regex_tester." 
+          add_insult
+          exit  
+        end
+    end
 
     def statement
         @statement
@@ -24,6 +37,11 @@ class RegexTester
     private
     def pattern_matches? statement
         statement.match(@pattern) != nil
+    end
+
+    def add_insult
+        STDERR.puts "-------------------------------------"
+        STDERR.puts "As a coding infidel, you are hereby sentenced to death.  The firing squad will be here shortly to carry out the execution.  Please remain seated until they arrive. Thank you for your cooperation."   
     end
 
   end
